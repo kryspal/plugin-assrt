@@ -1,6 +1,6 @@
 # assrt: ASSRT subtitle provider plugin
 
-Owner: A4. Official plugin (closed source, change request 0117), implementing the protocol v1 `SubtitleProvider` service with `github.com/kryspal/plugin-sdk/sdk` (change request 0146, phase 1). It declares the capability `subtitles.search` and no feature code: the host's capability layer (and `SubtitleService`) decides whether subtitle search is licensed, so the plugin itself is never locked and can always be installed, configured and enabled. Paid features are now gated by the host's capability layer instead of the plugin (1.0.2). It is bundled in the image and reserved as an official ID; after the administrator enters their token and enables it on the plugin page, the subtitle search of the host (`internal/subtitle`) uses it together with the other subtitle providers. The plugin only returns bytes; saving the file next to the video is the host's job.
+An official Kryspal Media plugin that searches and downloads subtitles from ASSRT. It implements the protocol v1 `SubtitleProvider` service with [`github.com/kryspal/plugin-sdk`](https://github.com/kryspal/plugin-sdk) and declares the capability `subtitles.search`. The plugin only returns subtitle bytes; saving the file next to the video is the server's job. The plugin itself is never locked: whether subtitle search is available is decided by the server.
 
 ## Data source and terms
 
@@ -30,8 +30,12 @@ Not supported: rar archives without a file list (the plugin does not unpack rar)
 
 ## Version and bundling
 
-The version number is written only in `VERSION` (`go:embed`, also the `<version>` of the bundled directory). `deploy/plugins/build.sh` builds it; `CATALOG.json` is the display data for the plugin catalog.
+The version number is written only in `VERSION` (embedded with `go:embed`; it is also the plugin's reported version). `CATALOG.json` holds the display data for the plugin catalog. Releases are built by the CI workflows in `.github/workflows/`: a `v*` tag builds linux/amd64 and linux/arm64 packages and creates a GitHub Release. Any change that alters the binary needs a new `VERSION`; a published version is never changed.
 
 ## Tests
 
-`go test ./plugins/assrt` (`-short` skips the process test): `subtitles_test.go` runs against a fake HTTPS ASSRT with recorded-shape responses and made-up names (file-name query, title fallback, episode query and limit, nothing to ask, language matching, every status, quota window, spacing, file list, loose file, zip, rar without a list, the `{}` file list and `http://` links, errors); `plugin_test.go` has `TestDescribe`, `TestConfigure` and `TestPluginProcess`. Tests never call the real API.
+`go test ./...` (`-short` skips the process test): `subtitles_test.go` runs against a fake HTTPS ASSRT with recorded-shape responses and made-up names (file-name query, title fallback, episode query and limit, nothing to ask, language matching, every status, quota window, spacing, file list, loose file, zip, rar without a list, the `{}` file list and `http://` links, errors); `plugin_test.go` has `TestDescribe`, `TestConfigure` and `TestPluginProcess`. Tests never call the real API.
+
+## License
+
+Apache License 2.0, see `LICENSE` and `NOTICE`.
