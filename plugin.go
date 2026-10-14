@@ -26,7 +26,7 @@ const (
 // tokenRE is the shape of an ASSRT token: 32 letters and digits.
 var tokenRE = regexp.MustCompile(`^[0-9A-Za-z]{32}$`)
 
-// versionFile is the single source of the plugin version: the manifest's version, and also the <version> of the bundled directory (change request 0017).
+// versionFile is the single source of the plugin version: the manifest's version.
 //
 //go:embed VERSION
 var versionFile string
