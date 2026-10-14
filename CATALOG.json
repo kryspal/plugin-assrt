@@ -1,0 +1,14 @@
+{
+  "name": "ASSRT",
+  "nameI18n": {
+    "zh-TW": "ASSRT",
+    "zh-CN": "ASSRT"
+  },
+  "description": "Search and download subtitles from ASSRT (assrt.net), a large library of Chinese and bilingual subtitles. You enter your own token.",
+  "descriptionI18n": {
+    "zh-TW": "從 ASSRT（assrt.net）搜尋並下載字幕，中文與雙語字幕特別多。需要填入你自己的 token。",
+    "zh-CN": "从 ASSRT（assrt.net）搜索并下载字幕，中文和双语字幕特别多。需要填入你自己的 token。"
+  },
+  "owner": "Kryspal Media",
+  "capabilities": ["subtitles.search"]
+}
