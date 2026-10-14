@@ -2,6 +2,11 @@
 
 All notable changes to this plugin are listed here. The version in `VERSION` is the single source of the version number; a published version is never changed.
 
+## 1.0.3
+
+- Rebuilt with Go 1.27.2 and golang.org/x/net v0.60.0 (security fixes).
+- Includes the changes since the last published catalog version (1.0.1): the subtitle plugin is never locked (availability is decided by the server), plus the documentation and source cleanup for the public repository.
+
 ## 1.0.2
 
 - Subtitle search and download on ASSRT; the plugin is never locked, availability is decided by the server.
