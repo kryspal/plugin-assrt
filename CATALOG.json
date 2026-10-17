@@ -10,6 +10,7 @@
     "zh-CN": "从 ASSRT（assrt.net）搜索并下载字幕，中文和双语字幕特别多。需要填入你自己的 token。"
   },
   "owner": "Kryspal Media",
+  "minServer": "0.9.2-beta",
   "homepage": "https://github.com/kryspal/plugin-assrt",
   "capabilities": ["subtitles.search"]
 }
