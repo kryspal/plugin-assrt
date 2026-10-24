@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/url"
 	"path"
 	"regexp"
@@ -109,6 +110,13 @@ func (p *plugin) Search(ctx context.Context, req *pluginv1.SearchSubtitlesReques
 	if len(out) > limit {
 		out = out[:limit]
 	}
+	confirmedCount := 0
+	for _, c := range out {
+		if c.GetConfirmed() {
+			confirmedCount++
+		}
+	}
+	slog.InfoContext(ctx, "assrt search", slog.Int("candidates", len(out)), slog.Int("confirmed", confirmedCount)) // counts only, no names
 	return &pluginv1.SearchSubtitlesResponse{Candidates: out}, nil
 }
 
