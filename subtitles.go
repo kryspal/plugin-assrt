@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"path"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -91,12 +92,20 @@ func (p *plugin) Search(ctx context.Context, req *pluginv1.SearchSubtitlesReques
 				continue
 			}
 			out = append(out, &pluginv1.SubtitleCandidate{Id: strconv.FormatInt(s.ID, 10), Language: lang, ReleaseName: releaseName(s),
-				Format: subtitleFormat(s.SubType), MatchedBy: pluginv1.SubtitleCandidate_MATCHED_BY_NAME, Score: nameScore(s, t.GetFileName(), q.isFile)})
+				Format: subtitleFormat(s.SubType), MatchedBy: pluginv1.SubtitleCandidate_MATCHED_BY_NAME, Score: nameScore(s, t.GetFileName(), q.isFile),
+				Confirmed: confirmed(t.GetFileName(), s.VideoName, q.isFile)})
 		}
 		if len(out) > 0 {
 			break // the file name found subtitles; no need to ask again by title
 		}
 	}
+	// Confirmed candidates first (the server downloads in the order returned), then by score; ties keep ASSRT's order.
+	sort.SliceStable(out, func(i, j int) bool {
+		if a, b := out[i].GetConfirmed(), out[j].GetConfirmed(); a != b {
+			return a
+		}
+		return out[i].GetScore() > out[j].GetScore()
+	})
 	if len(out) > limit {
 		out = out[:limit]
 	}

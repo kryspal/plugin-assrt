@@ -21,6 +21,10 @@ ASSRT (assrt.net) is free for personal use. The terms ask to credit the site and
 
 Not supported: rar archives without a file list (the plugin does not unpack rar), VobSub and other image formats, and `.txt` readmes.
 
+## Confirmed (1.1.0)
+
+`confirmed(fileName, videoName, byFile)` in `confirm.go`. Only candidates found by the file name search (`is_file=1`) can be confirmed, and only when the folded video name (`foldName`: a known video or subtitle extension cut off, lower case, runs of non-letters and non-digits as one space) equals the folded file name, or one contains the other with the shorter at least 12 characters and at least two thirds of the longer (`minConfirmedStem`, `containmentShare`). Title search hits are never confirmed. Results are sorted confirmed first, then by score (stable, so ASSRT's own order breaks ties). The extension list exists because `path.Ext` takes the release group in "...x264-GRP" for an extension.
+
 ## Settings
 
 | Key | Type | Description |

@@ -2,6 +2,11 @@
 
 All notable changes to this plugin are listed here. The version in `VERSION` is the single source of the version number; a published version is never changed.
 
+## 1.1.0
+
+- A subtitle found by the video's file name is marked confirmed (`SubtitleCandidate.confirmed`) when its video name is that file (the same name, or one inside the other when the shorter is a real part of the longer: at least 12 characters and two thirds of it). A title search hit is never confirmed. Candidates are ordered confirmed first, then by score. A server that downloads subtitles by itself takes only confirmed candidates from this plugin; a server that does not know the field ignores it.
+- Built with plugin SDK v0.8.0.
+
 ## 1.0.6
 
 - Built with plugin SDK v0.7.0. No functional change.
