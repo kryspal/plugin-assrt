@@ -44,7 +44,11 @@ type assrtSub struct {
 	NativeName string `json:"native_name"`
 	VideoName  string `json:"videoname"`
 	SubType    string `json:"subtype"`
-	Lang       struct {
+	// UploadTime is "2015-08-21 22:11:00" (the site's local time); only the date is used.
+	UploadTime looseString `json:"upload_time"`
+	// VoteMachineTranslate is present when users rated the subtitle as machine translated (a flag or a count, depending on the response).
+	VoteMachineTranslate json.RawMessage `json:"vote_machine_translate"`
+	Lang                 struct {
 		LangList map[string]bool `json:"langlist"`
 		Desc     string          `json:"desc"`
 	} `json:"lang"`
@@ -92,9 +96,11 @@ func (p *plugin) Search(ctx context.Context, req *pluginv1.SearchSubtitlesReques
 			if !ok {
 				continue
 			}
-			out = append(out, &pluginv1.SubtitleCandidate{Id: strconv.FormatInt(s.ID, 10), Language: lang, ReleaseName: releaseName(s),
+			c := &pluginv1.SubtitleCandidate{Id: strconv.FormatInt(s.ID, 10), Language: lang, ReleaseName: releaseName(s),
 				Format: subtitleFormat(s.SubType), MatchedBy: pluginv1.SubtitleCandidate_MATCHED_BY_NAME, Score: nameScore(s, t.GetFileName(), q.isFile),
-				Confirmed: confirmed(t.GetFileName(), s.VideoName, q.isFile)})
+				Confirmed: confirmed(t.GetFileName(), s.VideoName, q.isFile)}
+			addDetails(c, s)
+			out = append(out, c)
 		}
 		if len(out) > 0 {
 			break // the file name found subtitles; no need to ask again by title

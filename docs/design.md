@@ -51,3 +51,7 @@ Release process (maintainers): update `VERSION` and `CHANGELOG.md` for any chang
 ## License
 
 Apache License 2.0, see `LICENSE` and `NOTICE`.
+
+## Candidate details (1.2.0)
+
+`details.go`, `addDetails`: the search result has `upload_time` (becomes `uploaded_at`, date only) and the optional `vote_machine_translate` (a flag or a count; true or above zero becomes `machine_translated`). The size, download count and file list are only in `sub/detail`, one call per candidate against a quota of 20 a minute, so `size_bytes`, `file_count` and the download count stay unknown; ASSRT has no frame rate, duration, trusted flag or note. `vote_score` is not mapped to `rating` (0 to 10): its scale is not documented. Nothing is guessed from the file name, and none of this sets `confirmed`. Tests: `details_test.go`.

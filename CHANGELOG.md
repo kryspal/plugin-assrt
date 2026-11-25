@@ -2,6 +2,11 @@
 
 All notable changes to this plugin are listed here. The version in `VERSION` is the single source of the version number; a published version is never changed.
 
+## 1.2.0
+
+- Candidates now carry the upload date and, when ASSRT users rated the subtitle as machine translated, that flag, so a person can compare before downloading. ASSRT gives the download size, download count and file list only in a per-subtitle detail call, which would use the 20 requests a minute for every candidate, so those stay unknown, as do frame rate, duration, trusted and note. Nothing is guessed or taken from the file name. ASSRT's vote score is not mapped to the rating, because its scale is not documented.
+- `confirmed` is unchanged.
+
 ## 1.1.0
 
 - A subtitle found by the video's file name is marked confirmed (`SubtitleCandidate.confirmed`) when its video name is that file (the same name, or one inside the other when the shorter is a real part of the longer: at least 12 characters and two thirds of it). A title search hit is never confirmed. Candidates are ordered confirmed first, then by score. A server that downloads subtitles by itself takes only confirmed candidates from this plugin; a server that does not know the field ignores it.
